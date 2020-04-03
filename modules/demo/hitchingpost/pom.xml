@@ -1,0 +1,15 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>hitchingpost</artifactId>
+	<packaging>jar</packaging>
+
+	<name>hitchingpost</name>
+
+	<parent>
+		<groupId>org.gotti.wurmunlimited</groupId>
+		<artifactId>server-mods</artifactId>
+		<version>0.43</version>
+		<relativePath>../../mods</relativePath>
+	</parent>
+</project>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/modules/mods/meatmod/meatmod.iml" filepath="$PROJECT_DIR$/modules/mods/meatmod/meatmod.iml" />
+      <module fileurl="file://$PROJECT_DIR$/modules/modlauncher/server-modlauncher.iml" filepath="$PROJECT_DIR$/modules/modlauncher/server-modlauncher.iml" />
+      <module fileurl="file://$PROJECT_DIR$/modules/dist/server-modlauncher-dist.iml" filepath="$PROJECT_DIR$/modules/dist/server-modlauncher-dist.iml" />
+      <module fileurl="file://$PROJECT_DIR$/server-modlauncher-parent.iml" filepath="$PROJECT_DIR$/server-modlauncher-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/modules/mods/server-mods.iml" filepath="$PROJECT_DIR$/modules/mods/server-mods.iml" />
+      <module fileurl="file://$PROJECT_DIR$/modules/patcher/server-patcher.iml" filepath="$PROJECT_DIR$/modules/patcher/server-patcher.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="meatmod" />
+        <module name="server-modlauncher" />
+        <module name="server-patcher" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="actiondemo" target="1.8" />
+      <module name="announcer" target="1.8" />
+      <module name="bagofholding" target="1.8" />
+      <module name="christmasmod" target="1.8" />
+      <module name="creatureagemod" target="1.8" />
+      <module name="creaturedemo" target="1.8" />
+      <module name="cropmod" target="1.8" />
+      <module name="digtoground" target="1.8" />
+      <module name="harvesthelper" target="1.8" />
+      <module name="hitchingpost" target="1.8" />
+      <module name="httpserver" target="1.8" />
+      <module name="inbreedwarning" target="1.8" />
+      <module name="meatmod" target="1.8" />
+      <module name="scriptrunner" target="1.8" />
+      <module name="server-modlauncher" target="1.8" />
+      <module name="server-modlauncher-dist" target="1.8" />
+      <module name="server-modlauncher-parent" target="1.8" />
+      <module name="server-mods" target="1.8" />
+      <module name="server-patcher" target="1.8" />
+      <module name="serverfixes" target="1.8" />
+      <module name="servermap" target="1.8" />
+      <module name="serverpacks" target="1.8" />
+      <module name="spellmod" target="1.8" />
+      <module name="testmod" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
