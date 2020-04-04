@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e4aa2ac7-9994-4bca-a4cb-bc82d2dbd9f4" name="Default Changelist" comment="" />
+    <list default="true" id="e4aa2ac7-9994-4bca-a4cb-bc82d2dbd9f4" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mods/meatmod/src/main/java/org/gotti/wurmunlimited/mods/meatmod/MeatMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mods/meatmod/src/main/java/org/gotti/wurmunlimited/mods/meatmod/MeatMod.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MavenImportPreferences">
     <option name="importingSettings">
@@ -22,9 +29,44 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.25862068" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+  </component>
+  <component name="RunManager" selected="Shell Script.Server">
+    <configuration name="Client" type="ShConfigurationType">
+      <option name="SCRIPT_PATH" value="D:/Games/Wurm Unlimited/WurmLauncher/WurmLauncher.exe" />
+      <option name="SCRIPT_OPTIONS" value="" />
+      <option name="SCRIPT_WORKING_DIRECTORY" value="D:/Games/Wurm Unlimited/WurmLauncher/" />
+      <option name="INTERPRETER_PATH" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Server" type="ShConfigurationType">
+      <option name="SCRIPT_PATH" value="D:/Games/Wurm Unlimited/WurmServerLauncher/modlauncher_backup.bat" />
+      <option name="SCRIPT_OPTIONS" value="" />
+      <option name="SCRIPT_WORKING_DIRECTORY" value="D:/Games/Wurm Unlimited/WurmServerLauncher" />
+      <option name="INTERPRETER_PATH" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="ShConfigurationType">
+      <option name="SCRIPT_PATH" value="D:/Games/Wurm Unlimited/WurmServerLauncher/modlauncher_backup.bat" />
+      <option name="SCRIPT_OPTIONS" value="" />
+      <option name="SCRIPT_WORKING_DIRECTORY" value="D:/Games/Wurm Unlimited/WurmServerLauncher" />
+      <option name="INTERPRETER_PATH" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Shell Script.Server" />
+      <item itemvalue="Shell Script.Client" />
+    </list>
+  </component>
+  <component name="StructureViewFactory">
+    <option name="ACTIVE_ACTIONS" value=",SHOW_PROPERTIES,SHOW_ANONYMOUS" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -40,37 +82,60 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
+    <state x="432" y="163" key="#Notifications" timestamp="1585934824309">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="432" y="163" key="#Notifications/0.0.1680.1010@0.0.1680.1010" timestamp="1585934824309" />
     <state x="432" y="163" key="#Project_Structure" timestamp="1585851610780">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="432" y="163" key="#Project_Structure/0.0.1680.1010@0.0.1680.1010" timestamp="1585851610780" />
-    <state x="294" y="160" width="1092" height="775" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585852453026">
+    <state x="294" y="160" width="1092" height="775" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585928255702">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state x="294" y="160" width="1092" height="775" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1680.1010@0.0.1680.1010" timestamp="1585852453026" />
-    <state width="1637" height="126" key="GridCell.Tab.0.bottom" timestamp="1585860740070">
+    <state x="294" y="160" width="1092" height="775" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1680.1010@0.0.1680.1010" timestamp="1585928255702" />
+    <state width="1637" height="82" key="GridCell.Tab.0.bottom" timestamp="1586002479223">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1637" height="126" key="GridCell.Tab.0.bottom/0.0.1680.1010@0.0.1680.1010" timestamp="1585860740070" />
-    <state width="1637" height="126" key="GridCell.Tab.0.center" timestamp="1585860740070">
+    <state width="1637" height="82" key="GridCell.Tab.0.bottom/0.0.1680.1010@0.0.1680.1010" timestamp="1586002479223" />
+    <state width="1637" height="82" key="GridCell.Tab.0.center" timestamp="1586002479223">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1637" height="126" key="GridCell.Tab.0.center/0.0.1680.1010@0.0.1680.1010" timestamp="1585860740070" />
-    <state width="1637" height="126" key="GridCell.Tab.0.left" timestamp="1585860740070">
+    <state width="1637" height="82" key="GridCell.Tab.0.center/0.0.1680.1010@0.0.1680.1010" timestamp="1586002479223" />
+    <state width="1637" height="82" key="GridCell.Tab.0.left" timestamp="1586002479222">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1637" height="126" key="GridCell.Tab.0.left/0.0.1680.1010@0.0.1680.1010" timestamp="1585860740070" />
-    <state width="1637" height="126" key="GridCell.Tab.0.right" timestamp="1585860740070">
+    <state width="1637" height="82" key="GridCell.Tab.0.left/0.0.1680.1010@0.0.1680.1010" timestamp="1586002479222" />
+    <state width="1637" height="82" key="GridCell.Tab.0.right" timestamp="1586002479223">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1637" height="126" key="GridCell.Tab.0.right/0.0.1680.1010@0.0.1680.1010" timestamp="1585860740070" />
-    <state x="320" y="79" key="SettingsEditor" timestamp="1585852432481">
+    <state width="1637" height="82" key="GridCell.Tab.0.right/0.0.1680.1010@0.0.1680.1010" timestamp="1586002479223" />
+    <state x="320" y="79" key="SettingsEditor" timestamp="1585929709229">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state x="320" y="79" key="SettingsEditor/0.0.1680.1010@0.0.1680.1010" timestamp="1585852432481" />
+    <state x="320" y="79" key="SettingsEditor/0.0.1680.1010@0.0.1680.1010" timestamp="1585929709229" />
+    <state x="536" y="329" key="com.intellij.ide.util.TipDialog" timestamp="1586005976617">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="536" y="329" key="com.intellij.ide.util.TipDialog/0.0.1680.1010@0.0.1680.1010" timestamp="1586005976617" />
+    <state x="222" y="125" key="new project wizard" timestamp="1585948830445">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="222" y="125" key="new project wizard/0.0.1680.1010@0.0.1680.1010" timestamp="1585948830445" />
     <state x="496" y="233" width="672" height="677" key="run.anything.popup" timestamp="1585852353851">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="496" y="233" width="672" height="677" key="run.anything.popup/0.0.1680.1010@0.0.1680.1010" timestamp="1585852353851" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/modules/mods/meatmod/src/main/java/org/gotti/wurmunlimited/mods/meatmod/MeatMod.java</url>
+          <line>39</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
