@@ -36,67 +36,38 @@ import org.gotti.wurmunlimited.modloader.interfaces.WurmServerMod;
 public class MeatMod implements WurmServerMod, Configurable, Initable, PreInitable {
 	private Logger logger = Logger.getLogger(getClass().getName());
 
+    private int multiplier = 1;
+
 	private void Debug(String msg) {
 		System.out.println(msg);
 		System.out.flush();
 		this.logger.log(Level.INFO, msg);
 	}
 
-	public void configure(Properties properties) {
-		try {
-			String logsPath = Paths.get("mods", new String[0]) + "/logs/";
-			File newDirectory = new File(logsPath);
-			if (!newDirectory.exists())
-				newDirectory.mkdirs();
-			FileHandler fh = new FileHandler(String.valueOf(String.valueOf(String.valueOf(logsPath))) + getClass().getSimpleName() + ".log", 10240000, 200, true);
-			fh.setFormatter(new SimpleFormatter());
-			this.logger.addHandler(fh);
-		} catch (IOException ie) {
-			System.err.println(String.valueOf(String.valueOf(getClass().getName())) + ": Unable to add file handler to logger");
-		}
-	}
+    // The method configure is called when the mod is being loaded
+    @Override
+    public void configure(Properties properties) {
+        multiplier = Integer.valueOf(properties.getProperty("multiplier", Integer.toString(multiplier)));
+        logger.log(Level.INFO, "multiplier: " + multiplier);
+
+        // DEBUGER
+        try {
+            String logsPath = Paths.get("mods", new String[0]) + "/logs/";
+            File newDirectory = new File(logsPath);
+            if (!newDirectory.exists())
+                newDirectory.mkdirs();
+            FileHandler fh = new FileHandler(String.valueOf(String.valueOf(String.valueOf(logsPath))) + getClass().getSimpleName() + ".log", 10240000, 200, true);
+            fh.setFormatter(new SimpleFormatter());
+            this.logger.addHandler(fh);
+        } catch (IOException ie) {
+            System.err.println(String.valueOf(String.valueOf(getClass().getName())) + ": Unable to add file handler to logger");
+        }
+    }
 
 	public void preInit() {}
 
 	public void init() {
 		Debug("INIT");
-
-		// if ("com.wurmonline.server.items.Item".equals(m.getClassName()) && m.getMethodName().equals("insertItem"))
-		//						m.replace("corpse.insertItem(toCreate, true); $_ = $proceed($$);");
-
-		//tool.getRarity();
-		//getFat();
-
-//		if ("com.wurmonline.server.items.Item".equals(m.getClassName()) && m.getMethodName().equals("getRarity();"))
-//			m.replace("performer.getCommunicator().sendNormalServerMessage(\"You produce \" + toCreate); $_ = $proceed($$);");
-
-		// toCreate.setWeight((int)Math.min(corpse.getWeightGrams() * 0.5F, modWeight), true);
-
-		// if ("com.wurmonline.server.skills.Skill".equals(m.getClassName()) && m.getMethodName().equals("skillCheck"))
-		//						m.replace("1.0D; performer.getCommunicator().sendNormalServerMessage(\"RUNNED\" ); "+
-		//								""+
-		//								"$_ = $proceed($$);");
-
-//		if ("com.wurmonline.server.items.Item".equals(m.getClassName()) && m.getMethodName().equals("setWeight")){
-//			m.replace("toCreate.setWeight(2400, true);"+
-//					"performer.getCommunicator().sendNormalServerMessage(\"DEBUG Math.min = \" + (int)Math.min(corpse.getWeightGrams() * 0.5F, (float)(meattemplate.getWeightGrams() * creaturetemplate.getSize())));"+
-//					"performer.getCommunicator().sendNormalServerMessage(\"DEBUG toCreate.getWeightGrams() = \" + toCreate.getWeightGrams());"+
-//					"$_ = $proceed($$);");
-//		}
-
-//		if ("com.wurmonline.server.items.Item".equals(m.getClassName()) && m.getMethodName().equals("insertItem")){
-//			m.replace("corpse.insertItem($1, true); corpse.insertItem($1, true);" +
-//					"performer.getCommunicator().sendNormalServerMessage(\"DEBUG \");"+
-//					"$_ = $proceed($$);");
-//		}
-
-//									else if ("com.wurmonline.server.creatures.CreatureTemplate".equals(m.getClassName()) && m.getMethodName().equals("getItemsButchered")) {
-//			m.replace("creaturetemplate.getItemsButchered(); "+
-//					"performer.getCommunicator().sendNormalServerMessage(\"DEBUG ITEMS BUTCHERED \" + creaturetemplate.getItemsButchered().length+ " +
-//					" \" \" + creaturetemplate.getItemsButchered()[0]+ \" \" + creaturetemplate.getItemsButchered()[1]);" +
-//					"$_ = $proceed($$);");
-//		}
-
 
 		try {
 			String descriptCreateResultMethods = Descriptor.ofMethod(CtClass.voidType, new CtClass[]{
@@ -107,7 +78,6 @@ public class MeatMod implements WurmServerMod, Configurable, Initable, PreInitab
 					HookManager.getInstance().getClassPool().get("com.wurmonline.server.creatures.CreatureTemplate"), CtClass.intType});
 
 			CtMethod ctCreateResult = HookManager.getInstance().getClassPool().get("com.wurmonline.server.behaviours.CorpseBehaviour").getMethod("createResult", descriptCreateResultMethods);
-
 
 			ctCreateResult.setBody(
 					"    try {"+
@@ -232,42 +202,8 @@ public class MeatMod implements WurmServerMod, Configurable, Initable, PreInitab
 							"    } "
 			);
 
-
-
-//			ctCreateResult.instrument(new ExprEditor() {
-//				public void edit(MethodCall m) throws CannotCompileException {
-//							if ("com.wurmonline.server.items.Item".equals(m.getClassName()) && m.getMethodName().equals("setWeight")){
-//								m.replace("toCreate.setWeight(2400, true);"+
-//										"performer.getCommunicator().sendNormalServerMessage(\"DEBUG toCreate.getWeightGrams() = \" + toCreate.getWeightGrams());"+
-//										"$_ = $proceed($$);");
-//							}
-//							else if ("com.wurmonline.server.items.Item".equals(m.getClassName()) && m.getMethodName().equals("getSpellEffects")){
-//								m.replace("tool.getRarity();"+
-//										"performer.getCommunicator().sendNormalServerMessage(\"DEBUG POWER TRY NOT NULL \");"+
-//										"$_ = $proceed($$);");
-//							}
-//							else if ("com.wurmonline.server.skills.Skill".equals(m.getClassName()) && m.getMethodName().equals("skillCheck")) {
-//								m.replace("Math.abs(butcher.skillCheck(100.0D, $2, 10.0D, $4, 2.0F)); "+
-//										"performer.getCommunicator().sendNormalServerMessage(\"DEBUG POWER \" + Math.abs(butcher.skillCheck(100.0D, $2, 10.0D, $4, 2.0F)));" +
-//										"$_ = $proceed($$);");
-//							}
-//							else if ("com.wurmonline.server.creatures.CreatureTemplate".equals(m.getClassName()) && m.getMethodName().equals("getItemsButchered")) {
-//								m.replace("java.util.stream.IntStream.concat(java.util.Arrays.stream(creaturetemplate.getItemsButchered()), java.util.Arrays.stream(new int[]{ 307, 307, 307, 307, 307, 307, 307 })).toArray();"+
-//										""+
-//										"performer.getCommunicator().sendNormalServerMessage(\"DEBUG ITEMS BUTCHERED \" + java.util.stream.IntStream.concat(java.util.Arrays.stream(creaturetemplate.getItemsButchered()), java.util.Arrays.stream(new int[]{ 307, 307, 307, 307, 307, 307, 307 })).toArray().length+ " +
-//										" \" \" + java.util.Arrays.toString(java.util.stream.IntStream.concat(java.util.Arrays.stream(creaturetemplate.getItemsButchered()), java.util.Arrays.stream(new int[]{ 307, 307, 307, 307, 307, 307, 307 })).toArray()));" +
-//										"$_ = $proceed($$);");
-//							}
-//				}
-//			});
-
-
-
 		} catch (CannotCompileException|NotFoundException ex) {
 			this.logger.log(Level.SEVERE, ex.getMessage(), (Object[])ex.getStackTrace());
 		}
-
-
-
 	}
 }
