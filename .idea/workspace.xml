@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e4aa2ac7-9994-4bca-a4cb-bc82d2dbd9f4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/modules/mods/meatmod/dist/meatmod.config" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/modules/mods/meatmod/dist/meatmod.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/mods/meatmod/src/main/java/org/gotti/wurmunlimited/mods/meatmod/MeatMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mods/meatmod/src/main/java/org/gotti/wurmunlimited/mods/meatmod/MeatMod.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -116,22 +113,22 @@
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="415" y="99" key="CommitChangelistDialog2/0.0.1680.1010@0.0.1680.1010" timestamp="1586006246433" />
-    <state width="1637" height="82" key="GridCell.Tab.0.bottom" timestamp="1586002479223">
+    <state width="1637" height="82" key="GridCell.Tab.0.bottom" timestamp="1586007136401">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1637" height="82" key="GridCell.Tab.0.bottom/0.0.1680.1010@0.0.1680.1010" timestamp="1586002479223" />
-    <state width="1637" height="82" key="GridCell.Tab.0.center" timestamp="1586002479223">
+    <state width="1637" height="82" key="GridCell.Tab.0.bottom/0.0.1680.1010@0.0.1680.1010" timestamp="1586007136401" />
+    <state width="1637" height="82" key="GridCell.Tab.0.center" timestamp="1586007136401">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1637" height="82" key="GridCell.Tab.0.center/0.0.1680.1010@0.0.1680.1010" timestamp="1586002479223" />
-    <state width="1637" height="82" key="GridCell.Tab.0.left" timestamp="1586002479222">
+    <state width="1637" height="82" key="GridCell.Tab.0.center/0.0.1680.1010@0.0.1680.1010" timestamp="1586007136401" />
+    <state width="1637" height="82" key="GridCell.Tab.0.left" timestamp="1586007136400">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1637" height="82" key="GridCell.Tab.0.left/0.0.1680.1010@0.0.1680.1010" timestamp="1586002479222" />
-    <state width="1637" height="82" key="GridCell.Tab.0.right" timestamp="1586002479223">
+    <state width="1637" height="82" key="GridCell.Tab.0.left/0.0.1680.1010@0.0.1680.1010" timestamp="1586007136400" />
+    <state width="1637" height="82" key="GridCell.Tab.0.right" timestamp="1586007136401">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1637" height="82" key="GridCell.Tab.0.right/0.0.1680.1010@0.0.1680.1010" timestamp="1586002479223" />
+    <state width="1637" height="82" key="GridCell.Tab.0.right/0.0.1680.1010@0.0.1680.1010" timestamp="1586007136401" />
     <state x="320" y="79" key="SettingsEditor" timestamp="1585929709229">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>

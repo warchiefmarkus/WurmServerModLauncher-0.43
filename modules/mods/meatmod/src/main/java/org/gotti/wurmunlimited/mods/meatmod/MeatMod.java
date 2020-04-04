@@ -125,7 +125,7 @@ public class MeatMod implements WurmServerMod, Configurable, Initable, PreInitab
 							"null);"+
 							"              toCreate.setData2($2.getData1());"+
 							"              toCreate.setMaterial($7.getMeatMaterial());"+
-							"              toCreate.setWeight(((int)Math.min($2.getWeightGrams() * 0.5F, (float)(meattemplate.getWeightGrams() * $7.getSize()) ))*5, true);"+
+							"              toCreate.setWeight(((int)Math.min($2.getWeightGrams() * 0.5F, (float)(meattemplate.getWeightGrams() * $7.getSize()) ))*"+multiplier+", true);"+
 							"              if (toCreate.getWeightGrams() != 0) {"+
 							"                $2.insertItem(toCreate, true);"+
 							"                $1.getCommunicator().sendNormalServerMessage(\"You produce YES \" + toCreate.getNameWithGenus() + \".\");"+
