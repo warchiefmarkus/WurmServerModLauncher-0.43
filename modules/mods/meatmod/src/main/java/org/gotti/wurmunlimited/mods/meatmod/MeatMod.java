@@ -4,16 +4,20 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 
+
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.FileHandler;
 import java.util.logging.SimpleFormatter;
 
+
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtMethod;
+import javassist.CtNewMethod;
 import javassist.CtPrimitiveType;
 import javassist.NotFoundException;
 import javassist.bytecode.BadBytecode;
@@ -26,8 +30,19 @@ import javassist.bytecode.MethodInfo;
 import javassist.expr.ExprEditor;
 import javassist.expr.MethodCall;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.String;
+
+import com.wurmonline.server.behaviours.Action;
+import com.wurmonline.server.creatures.Creature;
+import com.wurmonline.server.items.Item;
+import com.wurmonline.server.bodys.TempWound;
+import org.gotti.wurmunlimited.modloader.classhooks.InvocationHandlerFactory;
+
 import org.gotti.wurmunlimited.modloader.classhooks.HookException;
 import org.gotti.wurmunlimited.modloader.classhooks.HookManager;
+
 import org.gotti.wurmunlimited.modloader.interfaces.Configurable;
 import org.gotti.wurmunlimited.modloader.interfaces.Initable;
 import org.gotti.wurmunlimited.modloader.interfaces.PreInitable;
@@ -36,7 +51,9 @@ import org.gotti.wurmunlimited.modloader.interfaces.WurmServerMod;
 public class MeatMod implements WurmServerMod, Configurable, Initable, PreInitable {
 	private Logger logger = Logger.getLogger(getClass().getName());
 
-    private int multiplier = 1;
+	private String meatWeightMultiplier = "1";
+	private String poisonedMaterials = "10000"; //74,76,78,81,82,86,87
+	private String strengthOfPoison = "500";
 
 	private void Debug(String msg) {
 		System.out.println(msg);
@@ -44,25 +61,31 @@ public class MeatMod implements WurmServerMod, Configurable, Initable, PreInitab
 		this.logger.log(Level.INFO, msg);
 	}
 
-    // The method configure is called when the mod is being loaded
-    @Override
-    public void configure(Properties properties) {
-        multiplier = Integer.valueOf(properties.getProperty("multiplier", Integer.toString(multiplier)));
-        logger.log(Level.INFO, "multiplier: " + multiplier);
+	// The method configure is called when the mod is being loaded
+	@Override
+	public void configure(Properties properties) {
+		meatWeightMultiplier = properties.getProperty("meatWeightMultiplier", meatWeightMultiplier);
+		logger.log(Level.INFO, "meat weight multiplier: " + meatWeightMultiplier);
 
-        // DEBUGER
-        try {
-            String logsPath = Paths.get("mods", new String[0]) + "/logs/";
-            File newDirectory = new File(logsPath);
-            if (!newDirectory.exists())
-                newDirectory.mkdirs();
-            FileHandler fh = new FileHandler(String.valueOf(String.valueOf(String.valueOf(logsPath))) + getClass().getSimpleName() + ".log", 10240000, 200, true);
-            fh.setFormatter(new SimpleFormatter());
-            this.logger.addHandler(fh);
-        } catch (IOException ie) {
-            System.err.println(String.valueOf(String.valueOf(getClass().getName())) + ": Unable to add file handler to logger");
-        }
-    }
+		poisonedMaterials = properties.getProperty("poisonedMaterials", poisonedMaterials);
+		logger.log(Level.INFO, "poisoned materials: " + poisonedMaterials);
+
+		strengthOfPoison = properties.getProperty("strengthOfPoison", strengthOfPoison);
+		logger.log(Level.INFO, "strength of poison: " + strengthOfPoison);
+
+		// DEBUGER
+		try {
+			String logsPath = Paths.get("mods", new String[0]) + "/logs/";
+			File newDirectory = new File(logsPath);
+			if (!newDirectory.exists())
+				newDirectory.mkdirs();
+			FileHandler fh = new FileHandler(String.valueOf(String.valueOf(String.valueOf(logsPath))) + getClass().getSimpleName() + ".log", 10240000, 200, true);
+			fh.setFormatter(new SimpleFormatter());
+			this.logger.addHandler(fh);
+		} catch (IOException ie) {
+			System.err.println(String.valueOf(String.valueOf(getClass().getName())) + ": Unable to add file handler to logger");
+		}
+	}
 
 	public void preInit() {}
 
@@ -70,6 +93,43 @@ public class MeatMod implements WurmServerMod, Configurable, Initable, PreInitab
 		Debug("INIT");
 
 		try {
+			// NEW METHOD ItemTemplate.isPoison
+			CtClass ctItemTemplate = HookManager.getInstance().getClassPool().get("com.wurmonline.server.items.ItemTemplate");
+			CtMethod isPoison = CtNewMethod.make(
+					" public boolean isPoison() {" +
+							"    return this.poison;" +
+							"  }",
+					ctItemTemplate);
+			ctItemTemplate.addMethod(isPoison);
+
+			// HOOK EATING
+			HookManager.getInstance().registerHook("com.wurmonline.server.behaviours.MethodsItems", "eat", "(Lcom/wurmonline/server/behaviours/Action;Lcom/wurmonline/server/creatures/Creature;Lcom/wurmonline/server/items/Item;F)Z", new InvocationHandlerFactory() {
+				public InvocationHandler createInvocationHandler() {
+					return new InvocationHandler() {
+						public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+							Boolean result = (Boolean)method.invoke(proxy, args);
+							Action act = (Action)args[0];
+							Creature player = (Creature)args[1];
+							Item food = (Item)args[2];
+							Object isPoison = food.getTemplate().getClass().getMethod("isPoison",new Class[]{}).invoke(food.getTemplate(), new Object[]{});
+
+							if (player.isPlayer()&&(Boolean)isPoison) {
+								player.getCommunicator().sendNormalServerMessage("You eating " + food.getName()+" but it poisoned !!! " ); // + (Boolean)isPoison
+								TempWound wound = new TempWound((byte)5, (byte)2, Float.parseFloat(strengthOfPoison), player.getWurmId(), 1.0f, 1.0f, true);
+								player.getBody().addWound(wound);
+							}
+							return result;
+						}
+					};
+				}
+			});
+
+		} catch (CannotCompileException|NotFoundException ex) {
+			this.logger.log(Level.SEVERE, ex.getMessage(), (Object[])ex.getStackTrace());
+		}
+
+		try {
+			// INCREASE FOOD WIGHT
 			String descriptCreateResultMethods = Descriptor.ofMethod(CtClass.voidType, new CtClass[]{
 					HookManager.getInstance().getClassPool().get("com.wurmonline.server.creatures.Creature"),
 					HookManager.getInstance().getClassPool().get("com.wurmonline.server.items.Item"),
@@ -77,7 +137,8 @@ public class MeatMod implements WurmServerMod, Configurable, Initable, PreInitab
 					HookManager.getInstance().getClassPool().get("com.wurmonline.server.items.Item"), CtClass.doubleType, CtClass.doubleType,
 					HookManager.getInstance().getClassPool().get("com.wurmonline.server.creatures.CreatureTemplate"), CtClass.intType});
 
-			CtMethod ctCreateResult = HookManager.getInstance().getClassPool().get("com.wurmonline.server.behaviours.CorpseBehaviour").getMethod("createResult", descriptCreateResultMethods);
+			CtClass ctCorpseBehaviour = HookManager.getInstance().getClassPool().get("com.wurmonline.server.behaviours.CorpseBehaviour");
+			CtMethod ctCreateResult = ctCorpseBehaviour.getMethod("createResult", descriptCreateResultMethods);
 
 			ctCreateResult.setBody(
 					"    try {"+
@@ -89,7 +150,7 @@ public class MeatMod implements WurmServerMod, Configurable, Initable, PreInitab
 							"      com.wurmonline.server.items.ItemTemplate meattemplate = null;"+
 							"      int meatType = ($7.getTemplateId() == 95) ? 900 : 92;"+
 							"      try {"+
-							"        meattemplate = com.wurmonline.server.items.ItemTemplateFactory.getInstance().getTemplate(meatType);"+
+							"        meattemplate = com.wurmonline.server.items.ItemTemplateFactory.getInstance().getTemplate(meatType);" +
 							"      } catch (com.wurmonline.server.items.NoSuchTemplateException nst) {"+
 							"        logger.log(java.util.logging.Level.WARNING, \"No template for meat!\");"+
 							"      } "+
@@ -121,14 +182,26 @@ public class MeatMod implements WurmServerMod, Configurable, Initable, PreInitab
 							"                  Math.min(" +
 							"							(float)Math.max((1.0D + com.wurmonline.server.Server.rand.nextFloat() * (10 + $4.getRarity() * 5)), " +
 							"							                 Math.min(100.0D, (double)$5)), " +
-							"							(float)$2.getCurrentQualityLevel()), " +
-							"null);"+
+							"							(float)$2.getCurrentQualityLevel()),null);"+
 							"              toCreate.setData2($2.getData1());"+
 							"              toCreate.setMaterial($7.getMeatMaterial());"+
-							"              toCreate.setWeight(((int)Math.min($2.getWeightGrams() * 0.5F, (float)(meattemplate.getWeightGrams() * $7.getSize()) ))*"+multiplier+", true);"+
+							"              toCreate.setWeight(((int)Math.min($2.getWeightGrams() * 0.5F, (float)(meattemplate.getWeightGrams() * $7.getSize()) ))*"+meatWeightMultiplier+", true);" +
+							"			   byte[] arr = new byte[]{"+poisonedMaterials+"};" +
+							"			   for(int i = 0; i < arr.length; i++){"+
+							"			   if (arr[i] == toCreate.getMaterial()){" +
+							"					   $1.getCommunicator().sendNormalServerMessage(\"Meat poisoned \"); " +
+							"						toCreate.getTemplate().assignTypes(new short[]{79});" +
+							"					}" +
+							"				}  " +
+
+//							"			   if( java.util.Arrays.asList("+poisonedMaterials+").contains()){" +
+//							"              		toCreate.getTemplate().assignTypes(new short[]{79});" +
+//							"		       		$1.getCommunicator().sendNormalServerMessage(\" MEAT_MATERIAL = \"+toCreate.getMaterial());"+
+//							"              }" +
+
 							"              if (toCreate.getWeightGrams() != 0) {"+
 							"                $2.insertItem(toCreate, true);"+
-							"                $1.getCommunicator().sendNormalServerMessage(\"You produce YES \" + toCreate.getNameWithGenus() + \".\");"+
+							"                $1.getCommunicator().sendNormalServerMessage(\"You produce \" + toCreate.getNameWithGenus() + \".\");"+
 							"              } "+
 							"            } catch (com.wurmonline.server.items.NoSuchTemplateException nst) {"+
 							"              logger.log(java.util.logging.Level.WARNING, \"No template for meat!\");"+
@@ -138,7 +211,7 @@ public class MeatMod implements WurmServerMod, Configurable, Initable, PreInitab
 							"      for (int x = 0; x < itemnums.length; x++) {"+
 							"        if (!createMeat || (itemnums[x] != 92 && itemnums[x] != 900))"+
 							"          try {"+
-							"            meattemplate = com.wurmonline.server.items.ItemTemplateFactory.getInstance().getTemplate(itemnums[x]);"+
+							"            meattemplate = com.wurmonline.server.items.ItemTemplateFactory.getInstance().getTemplate(itemnums[x]);" +
 							"            $5 = $3.skillCheck((double)com.wurmonline.server.Server.rand.nextInt((x + 1 + diffAdded) * 10), $4, 0.0D, dryRun, 1.0F);"+
 							"            if ($4.getSpellEffects() != null) {"+
 							"              float imbueEnhancement = 1.0F + $4.getSkillSpellImprovement(10059) / 100.0F;"+
@@ -165,7 +238,7 @@ public class MeatMod implements WurmServerMod, Configurable, Initable, PreInitab
 							"              if (toCreate.getWeightGrams() != 0) {"+
 							"                toCreate.setLastOwnerId($1.getWurmId());"+
 							"                $2.insertItem(toCreate, true);"+
-							"                $1.getCommunicator().sendNormalServerMessage(\"You produce YES\" + toCreate.getNameWithGenus() + \".\");"+
+							"                $1.getCommunicator().sendNormalServerMessage(\"You produce \" + toCreate.getNameWithGenus() + \".\");"+
 							"              } "+
 							"            } else {"+
 							"              $1.getCommunicator().sendNormalServerMessage(\"You fail to produce \" + meattemplate.getNameWithGenus() + \".\");"+
@@ -201,6 +274,8 @@ public class MeatMod implements WurmServerMod, Configurable, Initable, PreInitab
 							"      logger.log(java.util.logging.Level.WARNING, $1.getName() + \" had a problem with $2: \" + $2 + \", $3 skill: \" + $3 + \", $4: \" + $4 + \", template: \" + $7 + \", fatigue: \" + $8 + \" due to \" + fe.getMessage(), (Throwable)fe);"+
 							"    } "
 			);
+
+
 
 		} catch (CannotCompileException|NotFoundException ex) {
 			this.logger.log(Level.SEVERE, ex.getMessage(), (Object[])ex.getStackTrace());
